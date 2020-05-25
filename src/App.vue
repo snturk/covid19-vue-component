@@ -5,7 +5,21 @@
       <hr>
       <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center">
       <div id="dataContainer">
-        <div v-for="item in filteredData" class="countries" v-if="country">
+        <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country">
+          <div id="country">{{item.country}}</div>
+          <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
+          <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
+          <div id="totalDeaths">Total Deaths: <span class="countryData">{{item.totalDeaths}}</span></div>
+          <div id="newCases">New Cases: 
+            <span class="countryData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
+            <span class="countryData" v-else>0</span>
+          </div>
+          <div id="newDeaths">New Deaths: 
+            <span class="countryData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
+            <span class="countryData" v-else>0</span>
+          </div>
+        </div>
+        <div v-for="item in covidData" :key="item.country" class="countries" v-if="!country">
           <div id="country">{{item.country}}</div>
           <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
           <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
@@ -34,7 +48,7 @@
 export default {
   data(){
     return {
-      country: "",
+      country: '',
       covidData: null,
       filteredData: [],
     }
@@ -83,7 +97,6 @@ body{
   left: 0;
   height: 100%;
   width: 100%;
-  margin-top: 10px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
