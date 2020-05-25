@@ -89,6 +89,7 @@ body{
   text-align: center;
   color: black;
   display: flex;
+  align-items: center;
   flex-direction: column;
   margin-top: 10px;
 }
