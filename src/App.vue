@@ -83,6 +83,7 @@ body{
   left: 0;
   height: 100%;
   width: 100%;
+  margin-top: 10px;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -91,7 +92,22 @@ body{
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 10px;
+}
+
+/* loading screen */
+#loadingCircle {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  margin: 0 auto;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 #mainContainer{
