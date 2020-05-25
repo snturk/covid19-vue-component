@@ -110,18 +110,60 @@ body{
 
 /* loading screen */
 #loadingCircle {
-  border: 5px solid #f3f3f3; /* Light grey */
-  border-top: 5px solid #3498db; /* Blue */
+  border: 7px solid rgba(0, 0, 0, 0);
+  border-top: 7px solid #d61313; /* Blue */
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   margin: 0 auto;
-  animation: spin 2s linear infinite;
+  animation: loading 2s linear infinite;
+  transition-duration: 180ms;
 }
+#loading{margin-top: 20px;}
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes loading {
+  0% { 
+    transform: rotate(0deg); 
+    border-right: 7px solid gold;
+    border-left: 7px solid greenyellow;
+    border-bottom: 7px solid royalblue;
+    border-radius: 10%;
+  }
+  15% { 
+    transform: rotate(5deg);
+    border-right: 7px solid gold;
+    border-left: 7px solid greenyellow;
+    border-bottom: 7px solid royalblue;
+    border-radius: 10%;
+  }
+  30% { 
+    transform: rotate(10deg);
+    border-right: 7px solid rgba(0, 0, 0, 0);
+    border-left: 7px solid rgba(0, 0, 0, 0);
+    border-bottom: 7px solid rgba(0, 0, 0, 0);
+    border-radius: 50%;
+   }
+  70% { 
+    transform: rotate(350deg); 
+    border-right: 7px solid rgba(0, 0, 0, 0);
+    border-left: 7px solid rgba(0, 0, 0, 0);
+    border-bottom: 7px solid rgba(0, 0, 0, 0);
+    border-radius: 50%;
+    }
+  85% {
+    transform: rotate(355deg);
+    border-right: 7px solid gold;
+    border-left: 7px solid greenyellow;
+    border-bottom: 7px solid royalblue;
+    border-radius: 10%;
+  }
+  100% {
+    transform: rotate(360deg);
+    border-right: 7px solid gold;
+    border-left: 7px solid greenyellow;
+    border-bottom: 7px solid royalblue;
+    border-radius: 10%;
+  }
 }
 
 #mainContainer{
