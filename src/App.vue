@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="mainContainer" v-if="covidData">
-      <div id="mainTitle">COVID-19 LIVE DATA</div>
+      <div id="mainTitle">COVID-19 LIVE DATA <div></div></div>
       <hr>
       <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
       <div id="dataContainer">
@@ -266,6 +266,20 @@ body{
 #mainTitle{
   font-size: 130%;
   font-family: 'Roboto Slab', serif;
+  display: flex;
+  justify-content: center;
+}
+#mainTitle div{
+  background: red;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: blink 2s infinite;
+}
+@keyframes blink {
+  0%{opacity: 1;}
+  50%{opacity: 0;}
+  100%{opacity: 1;}
 }
 hr{
   border: 1px solid black;
