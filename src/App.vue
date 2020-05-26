@@ -71,9 +71,12 @@ export default {
   watch: {
     country: function(){
       if (this.country != "") {
+        
         this.filteredData = [];
         this.covidData.forEach(item => {
-          if(item.country.includes(this.country.toString())){
+          var input = this.country.toString().toLowerCase();
+          var data = item.country.toLowerCase();
+          if(data.includes(input)){
             this.filteredData.push(item);
           }
         });
