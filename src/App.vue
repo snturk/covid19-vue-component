@@ -6,7 +6,7 @@
       <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
       <div id="dataContainer">
         <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country">
-          <div id="country">{{item.country}}</div>
+          <div id="country">- {{item.country}} -</div>
           <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
           <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
           <div id="totalDeaths">Total Deaths: <span class="countryData">{{item.totalDeaths}}</span></div>
@@ -20,7 +20,7 @@
           </div>
         </div>
         <div v-for="item in covidData" :key="item.country" class="countries" v-if="!country">
-          <div id="country">{{item.country}}</div>
+          <div id="country">- {{item.country}} -</div>
           <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
           <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
           <div id="totalDeaths">Total Deaths: <span class="countryData">{{item.totalDeaths}}</span></div>
@@ -265,6 +265,7 @@ body{
 
 #mainTitle{
   font-size: 130%;
+  font-family: 'Roboto Slab', serif;
 }
 hr{
   border: 1px solid black;
@@ -274,6 +275,7 @@ hr{
 #countryInput{
   padding: 2.3%;
   font-size: 100%;
+  font-family: 'Muli', serif;
   margin-bottom: 4%;
   border: 1px solid black;
   color: rgb(65, 65, 65);
@@ -307,10 +309,13 @@ hr{
   transition-duration: 200ms;
   background: white;
   color: rgb(100, 91, 80);
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 300;
 }
 
 #country{
   font-size: 22px;
+  font-family: 'Roboto Slab', sans-serif;
   color: rgb(48, 43, 39);
   margin-bottom: 4%;
 }
@@ -322,6 +327,7 @@ hr{
 .countryData{
   color: black;
   font-weight: bold;
+  font-family: 'Roboto Slab', sans-serif;
 }
 
 #author{
