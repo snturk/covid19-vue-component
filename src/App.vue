@@ -55,18 +55,14 @@ export default {
   },
   async mounted(){
     const requestOptions = {
-    method: "GET",
-    hostname: "api.collectapi.com",
-    port: null,
-    path: "/corona/countriesData",
     headers: {
       "content-type": "application/json",
       "authorization": "apikey 0LDrJPecNtjejwaJLETWi2:2ZCRkcLxxwYrnFMMMqPZ1s"
     }
   };
-  const response = await fetch("https://api.collectapi.com/corona/countriesData", requestOptions);
-  const data = await response.json();
-  this.covidData = data.result;
+    const response = await fetch("https://api.collectapi.com/corona/countriesData", requestOptions);
+    const data = await response.json();
+    this.covidData = data.result;
   },
   watch: {
     country: function(){
