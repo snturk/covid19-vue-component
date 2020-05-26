@@ -3,7 +3,7 @@
     <div id="mainContainer" v-if="covidData">
       <div id="mainTitle">COVID-19 LIVE DATA</div>
       <hr>
-      <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center">
+      <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
       <div id="dataContainer">
         <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country">
           <div id="country">{{item.country}}</div>
@@ -258,7 +258,7 @@ body{
 #mainContainer{
   height: 55%;
   width: 300px;
-  padding: 1%;
+  padding: 2%;
   margin-top: 4%;
   margin: 0 auto;
   border: 1.5px solid black;
@@ -276,10 +276,17 @@ hr{
 }
 
 #countryInput{
-  padding: 1.8%;
+  padding: 2.3%;
   font-size: 100%;
   margin-bottom: 4%;
+  border: 1px solid black;
   color: rgb(65, 65, 65);
+  transition-duration: 280ms;
+}
+#countryInput:focus{
+  outline: none;
+  border: #000;
+  transform: scale(1.05);
 }
 
 #dataContainer{
@@ -287,6 +294,7 @@ hr{
   background: white;
   margin: 1%;
   height: 65%;
+  max-height: 66%;
   border: 2px solid black;
   border-radius: 5px;
   padding: 4%;
