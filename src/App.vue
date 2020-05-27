@@ -3,35 +3,42 @@
     <div id="mainContainer" v-if="covidData">
       <div id="mainTitle">COVID-19 LIVE DATA <div></div></div>
       <hr>
-      <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
+      <div id="inputContainer">
+        <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
+        <div id="showTotalBtn" v-on:click="filterTotal">{{dataToShow}}</div>
+      </div>
       <div id="dataContainer">
-        <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country">
+        <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country && !showTotal">
           <div id="country">- {{item.country}} -</div>
-          <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
-          <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
-          <div id="totalDeaths">Total Deaths: <span class="countryData">{{item.totalDeaths}}</span></div>
+          <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
+          <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
+          <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
           <div id="newCases">New Cases: 
-            <span class="countryData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
-            <span class="countryData" v-else>0</span>
+            <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
+            <span class="covidData" v-else>0</span>
           </div>
           <div id="newDeaths">New Deaths: 
-            <span class="countryData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
-            <span class="countryData" v-else>0</span>
+            <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
+            <span class="covidData" v-else>0</span>
           </div>
         </div>
-        <div v-for="item in covidData" :key="item.country" class="countries" v-if="!country">
+        <div v-for="item in covidData" :key="item.country" class="countries" v-if="!country && !showTotal">
           <div id="country">- {{item.country}} -</div>
-          <div id="totalCases">Total Cases: <span class="countryData">{{item.totalCases}}</span></div>
-          <div id="totalRecovered">Total Recovered: <span class="countryData">{{item.totalRecovered}}</span></div>
-          <div id="totalDeaths">Total Deaths: <span class="countryData">{{item.totalDeaths}}</span></div>
+          <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
+          <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
+          <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
           <div id="newCases">New Cases: 
-            <span class="countryData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
-            <span class="countryData" v-else>0</span>
+            <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
+            <span class="covidData" v-else>0</span>
           </div>
           <div id="newDeaths">New Deaths: 
-            <span class="countryData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
-            <span class="countryData" v-else>0</span>
+            <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
+            <span class="covidData" v-else>0</span>
           </div>
+        </div>
+        <div id="totalData" v-if="showTotal">
+          <div id="totalCases">Total Cases: <span class="covidData">{{totalData.totalCases}}</span></div>
+          <div id="totalRecovered">Total Recovered: <span class="covidData">{{totalData.totalRecovered}}</span></div>
         </div>
       </div>
       <div id="author">made by <a href="http://github.com/snturk" target="_blank" >muratcan şentürk</a></div>
@@ -49,7 +56,10 @@ export default {
   data(){
     return {
       country: '',
+      showTotal: false,
+      dataToShow: 'Total',
       covidData: null,
+      totalData: null,
       filteredData: [],
     }
   },
@@ -63,7 +73,20 @@ export default {
     const response = await fetch("https://api.collectapi.com/corona/countriesData", requestOptions);
     const data = await response.json();
     this.covidData = data.result;
+
+    const responseTotal = await fetch("https://api.collectapi.com/corona/totalData", requestOptions);
+    const dataTotal = await responseTotal.json();
+    this.totalData = dataTotal.result;
   },
+  methods: {
+    filterTotal(){
+      this.showTotal = !(this.showTotal);
+      if(this.dataToShow == 'Countries')
+      this.dataToShow = 'Total'
+      else
+      this.dataToShow = 'Countries'
+    }
+      },
   watch: {
     country: function(){
       if (this.country != "") {
@@ -252,7 +275,7 @@ body{
 }
 
 #mainContainer{
-  height: 55%;
+  height: 70%;
   width: 300px;
   padding: 2%;
   margin-top: 4%;
@@ -286,11 +309,20 @@ hr{
   margin-bottom: 4%;
 }
 
+#inputContainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Roboto', serif;
+  margin-top: 6%;
+  margin-bottom: 6%;
+}
+
 #countryInput{
   padding: 2.3%;
   font-size: 100%;
-  font-family: 'Muli', serif;
-  margin-bottom: 4%;
+  margin-right: 2%;
   border: 1px solid black;
   color: rgb(65, 65, 65);
   transition-duration: 280ms;
@@ -299,6 +331,16 @@ hr{
   outline: none;
   border: #000;
   transform: scale(1.05);
+}
+
+#showTotalBtn{
+  border: 1px solid black;
+  border-radius: 7px;
+  margin-left: 2%;
+  padding: 2.3%;
+  background: black;
+  color: whitesmoke;
+  cursor: pointer;
 }
 
 #dataContainer{
@@ -338,10 +380,27 @@ hr{
   margin-top: 1%;
 }
 
-.countryData{
+.covidData{
   color: black;
   font-weight: bold;
   font-family: 'Roboto Slab', sans-serif;
+}
+
+#totalData{
+  padding: 3%;
+  border: 0.7px solid rgb(75, 75, 75);
+  border-radius: 5px;
+  margin-top: 3%;
+  font-size: 100%;
+  transition-duration: 200ms;
+  background: white;
+  color: rgb(100, 91, 80);
+  font-family: 'Roboto Slab', sans-serif;
+  font-weight: 300;
+}
+
+#totalData div:last-child{
+  margin-top: 4%;
 }
 
 #author{
