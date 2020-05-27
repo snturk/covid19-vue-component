@@ -274,12 +274,12 @@ body{
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  animation: blink 2s infinite;
+  animation: blink 1.5s infinite;
 }
 @keyframes blink {
-  0%{opacity: 1;}
-  50%{opacity: 0;}
-  100%{opacity: 1;}
+  from{background: none;}
+  to{background: red;}
+
 }
 hr{
   border: 1px solid black;
