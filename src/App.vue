@@ -4,7 +4,7 @@
       <div id="mainTitle">COVID-19 LIVE DATA <div></div></div>
       <hr>
       <div id="inputContainer">
-        <input type="text" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
+        <input type="text" v-if="!showTotal" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
         <div id="showTotalBtn" v-on:click="filterTotal">{{dataToShow}}</div>
       </div>
       <div id="dataContainer">
