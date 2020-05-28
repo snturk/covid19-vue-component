@@ -406,4 +406,10 @@ hr{
 #author{
   font-size: 13px;
 }
+
+@media only screen and (max-width: 728px){
+  #mainContainer{
+    max-height: 90%;
+  }
+}
 </style>
