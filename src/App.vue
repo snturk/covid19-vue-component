@@ -275,7 +275,7 @@ body{
 }
 
 #mainContainer{
-  height: 70%;
+  max-height: 60%;
   width: 300px;
   padding: 2%;
   margin-top: 4%;
