@@ -347,7 +347,7 @@ hr{
   overflow: auto;
   background: white;
   margin: 1%;
-  height: 65%;
+  margin-bottom: 2%;
   max-height: 66%;
   border: 2px solid black;
   border-radius: 5px;
