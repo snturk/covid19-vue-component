@@ -282,7 +282,7 @@ body{
   margin: 0 auto;
   border: 1.5px solid black;
   border-radius: 10px;
-  background: rgb(13, 182, 13);
+  background: #88d2db;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
@@ -353,7 +353,7 @@ hr{
   border-radius: 5px;
   padding: 4%;
   transition-duration: 200ms;
-  background: rgb(10, 139, 10);
+  background: #719da3;
   box-shadow: 2px 2px 4px rgba(0,0,0,0.5), inset 5px 5px 8px rgba(0,0,0,0.5);
 }
 
