@@ -1,6 +1,6 @@
 {
   "name": "covid19-vue-component",
-  "version": "1.0",
+  "version": "0.0.1",
   "private": false,
   "author": "Muratcan Şenürk",
   "description": "Live COVID19 Vue component for your website.",
