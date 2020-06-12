@@ -1,7 +1,11 @@
 {
   "name": "covid19-vue-component",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0",
+  "private": false,
+  "author": "Muratcan Şenürk",
+  "description": "Live COVID19 Vue component for your website.",
+  "license": "MIT",
+  "main": "./dist/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"
