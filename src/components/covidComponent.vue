@@ -1,39 +1,43 @@
 <template>
   <div id="container">
-    <div id="mainContainer" v-if="covidData">
+    <div id="mainContainer" v-if="loaded">
       <div id="mainTitle">COVID-19 LIVE DATA <div></div></div>
       <hr>
       <div id="inputContainer">
         <input type="text" v-if="!showTotal" name="country" id="countryInput" v-model="country" placeholder="search a country" style="text-align: center" autocomplete="off">
-        <div id="showTotalBtn" v-on:click="filterTotal">{{dataToShow}}</div>
+        <div id="showTotalBtn" v-on:click="filterTotal()">{{!showTotal ? 'Total' : 'Countries'}}</div>
       </div>
       <div id="dataContainer">
-        <div v-for="item in filteredData" :key="item.country" class="countries" v-if="country && !showTotal">
-          <div id="country">- {{item.country}} -</div>
-          <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
-          <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
-          <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
-          <div id="newCases">New Cases: 
-            <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
-            <span class="covidData" v-else>0</span>
-          </div>
-          <div id="newDeaths">New Deaths: 
-            <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
-            <span class="covidData" v-else>0</span>
+        <div v-if="country && !showTotal">
+          <div v-for="item in filteredData" :key="item.country" class="countries">
+            <div id="country">- {{item.country}} -</div>
+            <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
+            <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
+            <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
+            <div id="newCases">New Cases: 
+              <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
+              <span class="covidData" v-else>0</span>
+            </div>
+            <div id="newDeaths">New Deaths: 
+              <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
+              <span class="covidData" v-else>0</span>
+            </div>
           </div>
         </div>
-        <div v-for="item in covidData" :key="item.country" class="countries" v-if="!country && !showTotal">
-          <div id="country">- {{item.country}} -</div>
-          <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
-          <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
-          <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
-          <div id="newCases">New Cases: 
-            <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
-            <span class="covidData" v-else>0</span>
-          </div>
-          <div id="newDeaths">New Deaths: 
-            <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
-            <span class="covidData" v-else>0</span>
+        <div v-if="!country && !showTotal">
+          <div v-for="item in covidData" :key="item.country" class="countries">
+            <div id="country">- {{item.country}} -</div>
+            <div id="totalCases">Total Cases: <span class="covidData">{{item.totalCases}}</span></div>
+            <div id="totalRecovered">Total Recovered: <span class="covidData">{{item.totalRecovered}}</span></div>
+            <div id="totalDeaths">Total Deaths: <span class="covidData">{{item.totalDeaths}}</span></div>
+            <div id="newCases">New Cases: 
+              <span class="covidData" v-if="item.newCases">{{item.newCases.split('+')[1]}}</span>
+              <span class="covidData" v-else>0</span>
+            </div>
+            <div id="newDeaths">New Deaths: 
+              <span class="covidData" v-if="item.newDeaths">{{item.newDeaths.split('+')[1]}}</span>
+              <span class="covidData" v-else>0</span>
+            </div>
           </div>
         </div>
         <div id="totalData" v-if="showTotal">
@@ -56,34 +60,56 @@ data(){
     return {
       country: '',
       showTotal: false,
-      dataToShow: 'Total',
-      covidData: null,
+      covidData: {},
+      loaded: false,
       totalData: null,
       filteredData: [],
+      requestOptions: {
+        headers: {
+          "content-type": "application/json",
+          "authorization": "apikey 0LDrJPecNtjejwaJLETWi2:2ZCRkcLxxwYrnFMMMqPZ1s"
+        }
+      }
     }
   },
-  async mounted(){
-    const requestOptions = {
-    headers: {
-      "content-type": "application/json",
-      "authorization": "apikey 0LDrJPecNtjejwaJLETWi2:2ZCRkcLxxwYrnFMMMqPZ1s"
-    }
-  };
-    const response = await fetch("https://api.collectapi.com/corona/countriesData", requestOptions);
-    const data = await response.json();
-    this.covidData = data.result;
+  created(){
+    this.loaded = false;
 
-    const responseTotal = await fetch("https://api.collectapi.com/corona/totalData", requestOptions);
-    const dataTotal = await responseTotal.json();
-    this.totalData = dataTotal.result;
+    //this.retrieveCountriesData();
+    this.retrieveTotalData();
+    this.loaded = true;
   },
   methods: {
     filterTotal(){
-      this.showTotal = !(this.showTotal);
-      if(this.dataToShow == 'Countries')
-      this.dataToShow = 'Total'
-      else
-      this.dataToShow = 'Countries'
+      this.showTotal = !this.showTotal;
+    },
+    retrieveCountriesData() {
+      this.loaded = false;
+
+      console.log("Retrieving Countries Data");
+      fetch("https://api.collectapi.com/corona/countriesData", this.requestOptions).then(res => {
+        res.json().then(data => {
+          this.covidData = data.result;
+        });
+      }).catch((err) => {
+        console.error(err);
+      }).finally(() => {
+        this.loaded = true;
+      });
+    },
+    retrieveTotalData() {
+      this.loaded = false;
+
+      console.log("Retrieving Countries Data");
+      fetch("https://api.collectapi.com/corona/totalData", this.requestOptions).then(res => {
+        res.json().then(data => {
+          this.totalData = data.result;
+        });
+      }).catch((err) => {
+        console.error(err);
+      }).finally(() => {
+        this.loaded = true;
+      });
     }
       },
   watch: {
