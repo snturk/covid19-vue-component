@@ -11,3 +11,7 @@ Easy to use and implement your website.
 I use that API that gets data from WHO(World Health Organization).
 
 [COVID-19 API](https://collectapi.com/tr/api/corona/covid-19-koronavirus-istatistik-api)
+
+## Usage
+
+Replace YOUR_API_KEY to a valid API key retrieved from https://collectapi.com, then simple use it anywhere.
